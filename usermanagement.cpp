@@ -61,7 +61,7 @@ void usermanagement::loadingusers()
 	string name, password, type;
 	int userID, bikeID;
 	string line;
-	//customer* newcustomer;
+	
 	if (in_file.is_open()) {
 		while (getline(in_file, line)) {  /// it will keep loading till it finds a new line and go to the next line and so on tell we finsih all the lines
 			stringstream userstream(line);
@@ -76,6 +76,7 @@ void usermanagement::loadingusers()
 
 				while (userstream >> bikeID) {
 					newcustomer->addrental(bikeID);// to load the bikes and then link them with the customer 
+					system.setcustomerBIKE(userID, bikeID);
 					userstream.ignore();
 				}
 			}
@@ -114,8 +115,8 @@ underlying_type_t<menuoptions2>inputchoice;//to connect betweent the  inputchoic
 // and the reason for foceing  , is only let the user to enter what is in the enumeration not any integer value 
 //menuoptions2 inputchoice;
 void handlemenu2() {
-	usermanagement manger;
 	bikesystem object;
+	usermanagement manger(object) ;
 	object.loadingbikes();
 	manger.loadingusers();
 	manger.registerAdmin("mahmoud", "medo", 562005);

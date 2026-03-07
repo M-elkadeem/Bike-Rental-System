@@ -1,5 +1,3 @@
-trek,fx 3,123,regular,m,1.5,0,1,0,0,0
-giant,escape 2,102,mountain,l,1.5,0,1,0,0,0
-scott,sub cross,103,105,s,1.5,0,1,0,0,0
-cannondale,qucik 4,106,Electrical,m,1.5,0,1,0,0,0
-foodora,2019,107,electric,large,1.5,0,1,0,0,0
+rqwr,,11,r,f,1.5,0,0,444,1772919972,21903
+fds,df,22,sdfsd,fsdf,1.5,0,0,49,1772919972,0
+fsdfwf,sf,33,s,fs,1.5,0,0,111,1772919972,9

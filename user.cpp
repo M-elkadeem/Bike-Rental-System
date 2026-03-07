@@ -78,6 +78,7 @@ void admin::showmenu(bikesystem& obj)
 			cout << "Enter the ID\n";
 			int ID;
 			cin >> ID;
+
 			obj.deletingbike(ID);
 			//	object.savingbike();
 			system("pause");
@@ -105,6 +106,7 @@ vector<int> admin::getrentedbikesID() const
 void customer::addrental(int bikeId)
 {
 	rentedbikesID.push_back(bikeId);
+	// we are gonna add thsi bikeid to the customerbike map 
 }
 
 void customer::removeRental(int bikeID)

@@ -21,6 +21,15 @@ bool bikesystem::bikeIDexist(int number)
 	return false;
 }
 
+bool bikesystem::IsbikeRented(bike & Bike,int ID) const
+{
+		if (Bike.getavailability() == true) {
+			return false;
+		}
+	
+	return true;
+}
+
 bike* bikesystem::createbike()
 {
 	string brand;
@@ -170,7 +179,7 @@ bool bikesystem::rentingbike(const int ID, const int userID)
 	// renting the bike 
 	biketorent->startrenting();
 	cout << " (: bike of ID " << ID << " is rented sucessfully :) !! Time is Running \n";
-	customerBIKE[userID] = ID;
+	customerBIKE[userID].push_back(ID); // this will add the bikeID to the vector of the userID in the map and if the userID is not exist it will create a new entry for this userID and add the bikeID to its vector
 	return true;
 }
 
@@ -184,7 +193,19 @@ void bikesystem::returningbike(const int ID, const int userID)
 	}
 	auto it = customerBIKE.find(ID);
 	if (it != customerBIKE.end()) {
-		customerBIKE.erase(it);
+		// once he enters here , this means that the user has some rented bikes and we will check if the bikeID is in the vector of this userID or not
+		
+		auto& bikeIDs = it->second; // this will give us the vector of bikeIDs for this userID and the & is for refrence to avoid copying the vector and the original vector will be modified when we erase the bikeID from it
+			auto bikeIt = find(bikeIDs.begin(), bikeIDs.end(), ID); // this will check if the bikeID is in the vector or not
+		
+			if (bikeIt !=bikeIDs.end()) {
+
+				bikeIDs.erase(bikeIt); // this will remove the bikeID from the vector of this userID in the map
+			
+			}
+			if (bikeIDs.empty()) {
+				customerBIKE.erase(it);
+			}
 	}
 	// checking for availabilty for returning
 	if (biketoreturn->getavailability()) {
@@ -199,15 +220,26 @@ void bikesystem::returningbike(const int ID, const int userID)
 	double cost = period * biketoreturn->priceof_Renting();
 	cout << " Rental Duration: " << period << " seconds\n";
 	cout << " Total Cost :  " << cost << " HUF" << "\n";
-	cout << " Bike returned successfully!\n";
+	cout << " Bike returned successfully!\n";	
 
 }
 
+void bikesystem::setcustomerBIKE(int userID, int bikeID)
+{
+	customerBIKE[userID].push_back(bikeID); //will be using this function to set all the rented bikes to the its customer again after opening the proejct again
+}
+
 void bikesystem::deletingbike(const int ID)
-{// add here to not delete any rented bikes , only the available ones 
+{
+
 	auto iterator = find_if(bikes.begin(), bikes.end(), [ID](const bike* b) { return b->getbikeID() == ID;});  // using stl and lamada instead of calling the function getbikebyID
 
 	if (!(iterator == bikes.end())) {
+
+		if (IsbikeRented(**iterator, ID)) {// we used two ** because the iterator is a pointer to a pointer of bike ( bike** ) and we need to dereference it twice to get the bike object and then we can call the function IsbikeRented on it
+			cout << "Error : You can't delete a rented bike \n";
+			return;
+		}
 		delete* iterator;  // it will delete the pointer which the iterator is pointing to 
 		bikes.erase(iterator);
 		cout << "Bike " << ID << " is deleted successfully.\n";
@@ -252,9 +284,14 @@ void bikesystem::veiwingRentals()
 		<< setw(10) << "Bike ID" << "\n";
 	cout << "-------------------------\n";
 	for (auto it = customerBIKE.begin(); it != customerBIKE.end(); ++it) {
-		cout << setw(15) << it->first
-			<< setw(10) << it->second
-			<< "\n";
+		cout << setw(15) << it->first ;
+
+		auto& bikeIDs = it->second;
+
+		for (int bikeid : bikeIDs) {
+			cout << "[" << bikeid << "] ";
+	}
+		cout << "\n";
 	}
 }
 
