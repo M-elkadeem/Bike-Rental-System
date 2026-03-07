@@ -1,4 +1,4 @@
-﻿  bikesystem.cpp
-C:\projects c++\bikesystem.cpp(118,12): warning C4244: 'initializing': conversion from '__int64' to 'int', possible loss of data
-C:\projects c++\bikesystem.cpp(399,1): warning C4715: 'bikesystem::confirmexit': not all control paths return a value
+﻿  mybike.cpp
+  usermanagement.cpp
+  Generating Code...
   Bike_Rental_system .vcxproj -> C:\projects c++\x64\Debug\Bike_Rental_system .exe

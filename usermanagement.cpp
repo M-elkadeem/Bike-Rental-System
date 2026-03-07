@@ -116,7 +116,7 @@ underlying_type_t<menuoptions2>inputchoice;//to connect betweent the  inputchoic
 //menuoptions2 inputchoice;
 void handlemenu2() {
 	bikesystem object;
-	usermanagement manger(object) ;
+	usermanagement manger(object);// this will link the user management with the bike system and that is why we have this constructor in the user management class
 	object.loadingbikes();
 	manger.loadingusers();
 	manger.registerAdmin("mahmoud", "medo", 562005);
